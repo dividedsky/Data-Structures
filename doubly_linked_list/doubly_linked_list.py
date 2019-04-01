@@ -120,10 +120,7 @@ class DoublyLinkedList:
             self.head = node.next
         if self.tail == node:
             self.tail = node.prev
-        if node.prev:
-            node.prev.next = node.next
-        if node.next:
-            node.next.prev = node.prev
+        node.delete()
         self.length -= 1
 
     def get_max(self):
