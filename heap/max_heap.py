@@ -11,7 +11,6 @@ class Heap:
 
     def delete(self):
         if len(self.storage) > 0:
-            print(self.storage)
             val = self.storage.pop(0)
             if len(self.storage):
                 self.storage = [self.storage.pop()] + self.storage  #  this is bad
@@ -25,24 +24,19 @@ class Heap:
         return len(self.storage)
 
     def _bubble_up(self, index):
-        while (
-            self.storage[math.floor((index - 1) / 2)] < self.storage[index]
-        ):  #  use floor //
-            self.storage[math.floor((index - 1) / 2)], self.storage[index] = (
-                self.storage[index],
-                self.storage[math.floor((index - 1) / 2)],
-            )
+        if index > 0:
+            parent_idx = (index - 1) // 2
+
+            if self.storage[parent_idx] < self.storage[index]:
+                self.storage[parent_idx], self.storage[index] = (
+                    self.storage[index],
+                    self.storage[parent_idx],
+                )
+                self._bubble_up(parent_idx)
 
     def _sift_down(self, index):
-        # while index <= len(self.storage) - 1:
-        # if index >= len(self.storage):
-        #     return
-        # else:
         left_idx = index * 2 + 1
         right_idx = index * 2 + 2
-        print("index:", index)
-        print("left:", left_idx)
-        print("right:", right_idx)
         try:
             left = self.storage[left_idx]
         except IndexError:
@@ -51,8 +45,6 @@ class Heap:
             right = self.storage[right_idx]
         except IndexError:
             right = None
-        print(left, right, index)
-        print(self.storage)
         if not left and not right:
             return None  # return if we are at a leaf
         if not right or left > right:
