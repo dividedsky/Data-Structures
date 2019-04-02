@@ -13,7 +13,8 @@ class Heap:
         if len(self.storage) > 0:
             val = self.storage.pop(0)
             if len(self.storage):
-                self.storage = [self.storage.pop()] + self.storage  #  this is bad
+                end = self.storage.pop()
+                self.storage.insert(0, end)
                 self._sift_down(0)
             return val
 
